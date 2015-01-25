@@ -1,6 +1,6 @@
 body {
-    background-color: #FF0000;
-    color: #FFFF00;
+    background-color: #FFFFFF;
+    color: #FFFFFF;
     font-family: Helvetica, Arial, sans-serif;
     text-align: center;
 }
@@ -10,5 +10,25 @@ h1 {
 }
 
 .clock {
-    font-size: 10em;
+    font-size: 4em;
+}
+
+.cold {
+    background-color: #95A5A6;
+}
+
+.chilly {
+    background-color: #1ABC9C;
+}
+
+.nice {
+    background-color: #2980B9;
+}
+
+.warm {
+    background-color: #E67E22;
+}
+
+.hot {
+    background-color: #E74C3C;
 }
