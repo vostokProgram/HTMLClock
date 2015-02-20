@@ -74,25 +74,32 @@ function addAlarm() {
 
     time = hours+":"+mins+" "+ampm;
 
-    var AlarmObject = Parse.Object.extend("Alarm");
-    var alarmObject = new AlarmObject();
-    alarmObject.save(
-        {
-            time: time,
-            alarmName: alarmName
-        },
-        {
-            success:
-            function(object) {
-                insertAlarm(time, alarmName);
-                hideAlarmPopup();
-            }
-        }
-    );
+    gapi
+        .client.plus.people.get({ userId: 'me' })
+        .execute(function(response) {
+            var AlarmObject = Parse.Object.extend("Alarm");
+            var alarmObject = new AlarmObject();
+            alarmObject.save(
+                {
+                    userId: response.result.id,
+                    time: time,
+                    alarmName: alarmName
+                },
+                {
+                    success:
+                    function(object) {
+                        insertAlarm(time, alarmName);
+                        hideAlarmPopup();
+                    }
+                }
+            );
+        });
+
+    
 
 }
 
-function getAllAlarms() {
+function getAllAlarms(userId) {
     Parse.initialize("wa8Z12x1UgImiDUfJxVUHmALc4fXCAyVpLjzXmrc", "iejXXr04iVBt8iyQOZs3gKZCl5vntv8HgmiuVYPR");
 
     var AlarmObject = Parse.Object.extend("Alarm");
@@ -101,7 +108,11 @@ function getAllAlarms() {
         success:
         function(results) {
             for (var i = 0; i < results.length; i++) {
-                insertAlarm(results[i].attributes.time, results[i].attributes.alarmName);
+                var alarm = results[i];
+                if (alarm.get("userId") == userId) {
+                    insertAlarm(alarm.get("time"), alarm.get("alarmName"));
+                }
+                
             }
         }
     });
@@ -145,7 +156,9 @@ function signinCallback(authResult) {
           .client.plus.people.get({ userId: 'me' })
           .execute(function(response) {
               $("#name-container").text(response.result.displayName);
+                    getAllAlarms(response.result.id);
           });
+
   } else {
     // Update the app to reflect a signed out user
     // Possible error values:
@@ -159,5 +172,5 @@ function signinCallback(authResult) {
 window.onload = function() {
     getTime();
     getTemp();
-    getAllAlarms();
+
 };
