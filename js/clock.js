@@ -149,22 +149,23 @@ function deleteAlarm() {
 
 function signinCallback(authResult) {
     if (authResult['status']['signed_in']) {
-         gapi.client.load('plus', 'v1',function(){});
-    // Update the app to reflect a signed in user
-    // Hide the sign-in button now that the user is authorized, for example:
-    document.getElementById('signinButton').setAttribute('style', 'display: none');
-      gapi
-          .client.plus.people.get({ userId: 'me' })
-          .execute(function(response) {
-              $("#name-container").text(response.result.displayName);
+        gapi.client.load('plus', 'v1',function(){
+            gapi
+                .client.plus.people.get({ userId: 'me' })
+                .execute(function(response) {
+                    $("#name-container").text(response.result.displayName);
                     getAllAlarms(response.result.id);
-          });
+                });});
+        // Update the app to reflect a signed in user
+        // Hide the sign-in button now that the user is authorized, for example:
+        document.getElementById('signinButton').setAttribute('style', 'display: none');
+        
 
-  } else {
-    // Update the app to reflect a signed out user
-    // Possible error values:
-    //   "user_signed_out" - User is signed-out
-    //   "access_denied" - User denied access to your app
+    } else {
+        // Update the app to reflect a signed out user
+        // Possible error values:
+        //   "user_signed_out" - User is signed-out
+        //   "access_denied" - User denied access to your app
     //   "immediate_failed" - Could not automatically log in the user
     console.log('Sign-in state: ' + authResult['error']);
   }
