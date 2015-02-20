@@ -7,8 +7,24 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+    <script src="js/clock.js"></script>
   </head>
   <body>
+    <!-- GOOGLE PLUS SIGNIN -->
+    <span id="signinButton">
+      <span
+         class="g-signin"
+         data-callback="signinCallback"
+         data-clientid="504335051901-v1cl187o8k15r1e0r1l0s813mjdce4jo.apps.googleusercontent.com"
+         data-cookiepolicy="single_host_origin"
+         data-requestvisibleactions="http://schema.org/AddAction"
+         data-scope="https://www.googleapis.com/auth/plus.login">
+      </span>
+    </span>
+
+
+    
     <h1>Current time:</h1>
     <p id="clock" class="clock"></p>
 
@@ -121,6 +137,6 @@
       <input type="button" value="Delete" class="button" onclick="deleteAlarm()"/>
     </div>
 
-    <script src="js/clock.js"></script>
+
   </body>
 </html>
