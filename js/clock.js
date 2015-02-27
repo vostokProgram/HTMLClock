@@ -74,6 +74,8 @@ function addAlarm() {
 
     time = hours+":"+mins+" "+ampm;
 
+    ga('send', 'event', 'Alarm', 'Add');
+
     gapi
         .client.plus.people.get({ userId: 'me' })
         .execute(function(response) {
@@ -120,6 +122,10 @@ function getAllAlarms(userId) {
 
 function deleteAlarm() {
     console.log("delete alarm");
+
+    ga('send', 'event', 'Alarm', 'Delete');
+
+    
     Parse.initialize("wa8Z12x1UgImiDUfJxVUHmALc4fXCAyVpLjzXmrc", "iejXXr04iVBt8iyQOZs3gKZCl5vntv8HgmiuVYPR");
     var alarmId = $("#deleteBox").val();
     var AlarmObject = Parse.Object.extend("Alarm");
